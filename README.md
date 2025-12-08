@@ -6,7 +6,7 @@ A full-stack MERN platform where students can offer services and hire other stud
 
 ## 🚀 Live Deployment Links
 
-**Frontend:** `https://skillhub-peach.vercel.app/`  
+**Frontend:** `https://skill-hub1-seven.vercel.app/`  
 **Backend API:** `https://skillhub-peach.vercel.app/`  
 **Database:** MongoDB
 
