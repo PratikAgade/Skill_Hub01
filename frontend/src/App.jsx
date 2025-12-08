@@ -1,35 +1,39 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Signup from './pages/Signup';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Layout from './components/Layout';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-
+import Home from './pages/Home';
+import BrowseServices from './pages/BrowseServices';
+import ServiceDetail from './pages/ServiceDetail';
+import FreelancerDashboard from './pages/FreelancerDashboard';
+import ClientDashboard from './pages/ClientDashboard';
+import PostProject from './pages/PostProject';
+import FreelancerProfile from './pages/FreelancerProfile';
+import AdminPanel from './pages/AdminPanel';
+import PaymentScreen from './pages/PaymentScreen';
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
-  }, []);
-
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-          <Route 
-            path="/dashboard" 
-            element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} 
-          />
-        </Routes>
-      </div>
-    </Router>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Layout />}>
+        { }
+        <Route index element={<Home />} />
+        <Route path="services" element={<BrowseServices />} />
+        <Route path="services/:id" element={<ServiceDetail />} />
+        <Route path="profile/:id" element={<FreelancerProfile />} />
+        { }
+        <Route path="freelancer/dashboard" element={<FreelancerDashboard />} />
+        { }
+        <Route path="client/dashboard" element={<ClientDashboard />} />
+        <Route path="client/post-project" element={<PostProject />} />
+        <Route path="client/edit-project/:id" element={<PostProject />} />
+        { }
+        <Route path="payments" element={<PaymentScreen />} />
+        { }
+        <Route path="admin" element={<AdminPanel />} />
+        { }
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
   );
 }
-
 export default App;

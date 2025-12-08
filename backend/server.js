@@ -1,38 +1,23 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import authRoutes from './routes/auth.js';
-
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
 dotenv.config();
-
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Middleware
-app.use(cors());
+const PORT = process.env.PORT || 5001;
 app.use(express.json());
-
-// Routes
-app.get('/', (req, res) => {
-  res.json({ 
-    message: 'SkillHub API is running',
-    status: 'active',
-    timestamp: new Date().toISOString()
-  });
-});
-
-app.use('/api/auth', authRoutes);
-
-// MongoDB Connection
+app.use(cors());
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('✅ MongoDB Connected Successfully');
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error('❌ MongoDB Connection Error:', error.message);
-    process.exit(1);
-  });
+    .then(() => console.log('MongoDB Connected Successfully'))
+    .catch(err => console.log('MongoDB Connection Error:', err));
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/services', require('./routes/serviceRoutes'));
+app.use('/api/projects', require('./routes/projectRoutes'));
+app.use('/api/dashboard', require('./routes/dashboardRoutes'));
+app.use('/api/payments', require('./routes/paymentRoutes'));
+app.get('/', (req, res) => {
+    res.send('SkillHub Backend is Running');
+});
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
