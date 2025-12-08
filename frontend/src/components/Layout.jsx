@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import NavBar from './NavBar';
+import NavBar from './Navbar';
 const Layout = () => {
     return (
         <div className="min-h-screen text-slate-800 font-sans selection:bg-indigo-500 selection:text-white">
